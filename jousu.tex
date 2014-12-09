@@ -1,0 +1,420 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[dvipdfmx]{jsarticle}
+\usepackage{otf}\PassOptionsToPackage{otf}{xkansuji}
+\usepackage[moga-mobo,directunicode]{pxchfon}
+\usepackage{ascmac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentclass[dvipdfmx,uplatex]{jsarticle}
+% \usepackage[uplatex]{otf}\PassOptionsToPackage{otf}{xkansuji}
+% \usepackage[moga-mobo,directunicode]{pxchfon}
+% \usepackage{ascmac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentclass{ltjsarticle}
+% \usepackage{luatexja-fontspec}
+% \setmainjfont{MogaMincho}\setsansjfont{MogaGothic}
+% \usepackage{bxascmac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentclass[xelatex]{bxjsarticle}
+% \makeatletter
+% \renewcommand{\paragraph}{%
+%   \@startsection{paragraph}{4}{\z@}{0.5\Cvs \@plus.5\Cdp \@minus.2\Cdp}{-1\jsZw}{\normalfont\normalsize ■\headfont}}
+% \makeatother
+% \usepackage{zxjatype}
+% \setmainfont{MogaMincho}\setCJKmainfont{MogaMincho}
+% \setCJKsansfont{MogaGothic}\setCJKmonofont{MogaGothic}
+% \usepackage{bxascmac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvipsnames]{color}\PassOptionsToPackage{color}{xkansuji}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{xkansuji}
+\makeatletter
+\def\JOcuurentChar{\xksj@Jo@command}%
+\begingroup
+\SetJOjp \expandafter\gdef\expandafter\JOjpChar\expandafter{\xksj@Jo@command}%
+\SetJOcn \expandafter\gdef\expandafter\JOcnChar\expandafter{\xksj@Jo@command}%
+\endgroup
+\def\YUjpChar{\xksj@YU}
+\makeatother
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{xint}
+\newif\ifSkipXint
+\SkipXinttrue % xint での計算が長引く場合に、計算済みの値を利用する。
+% \SkipXintfalse % xint での計算が長引いても、xintで全部計算する。
+
+
+\title{\textsf{Xkansujiパッケージ}}
+\author{tattsan}
+\date{}
+\begin{document}
+\maketitle
+漢数字の表示マクロを作ったら明後日の方向に進んでゆき、実に役に立たないパッケージになった。
+\def\thesection{第\xkansuji{section}話}
+\setcounter{section}{\xintSub{\xintiPow{2}{31}}{4}}%% 2^{31}-4
+\section{普通の命数法}
+当初は普通の漢数字マクロだった。
+p\TeX\space のプリミティブで \verb+\kansuji2014年+ が二〇一四年と表示されるのを、
+\Xkansuji{2014}年に変えることが目的のはずだった。
+\begin{screen}
+\begin{itemize}
+\item \verb+\xkansuji+ \LaTeX のカウンタの表示
+\item \verb+\@xkansuji+ \TeX カウンタ（\LaTeX カウンタの内部表現など）の表示
+\item \verb+\Xkansuji+ アラビア数字の文字列を変換して表示
+\end{itemize}  
+\end{screen}
+このようなマクロは既に多くの人が手掛けているから、何か特色を出したいと思い
+\textbf{大きな数を表示できること}を心掛けた。
+たとえば \TeX のカウンタが扱える範囲は $1-2^{31}$ から $2^{31}-1$ までであるから、
+\[
+2^{31}-1=\xintSub{\xintiPow{2}{31}}{1}
+\]
+は当然表示できねばならない。
+なお本パッケージの機能は単に数を表示するだけなので、
+$2^{31}$の十進展開を「計算する」ことは出来ない。
+この文書では計算については \textsf{xintパッケージ} を利用している。
+例えばセクションの番号の設定は、このセクションに入る前に次のように入力している。
+\begin{verbatim}
+\def\thesection{第\xkansuji{section}回}
+\setcounter{section}{\xintSub{\xintiPow{2}{31}}{4}}%% 2^{31}-4
+\end{verbatim}
+
+\paragraph{「\JOjpChar」について。}
+一,十,百,千,万,億,兆,京,垓,\JOjpChar,穣,溝, $\cdots$ の
+「\JOjpChar」%𥝱 = utf8:^^f0^^a5^^9d^^b1 = \UTF{25771} = \CID{17018}
+という文字について。この文字はJIS第2水準には存在せず、Unicode の第0面（基本多言語面, BMP）
+にも存在しない。Unicode の基本面にも無いのは、これが元々は
+「\JOcnChar」（U+79ED, CID 17022）%秭 = utf8:^^e7^^a7^^ad = \UTF {79ED} = \CID{17022}
+という文字であり、それが誤写によって形を変えた国字だからである。
+OTFフォントなら「\JOjpChar」は CID 17018 でアクセスできる。
+Unicodeなら第2面（追加漢字面, SIP）のU+25771にある。
+\begin{itemize}
+\item パッケージ・オプション\texttt{otf}で、\textsf{otfパッケージ}の \verb+\CID{17018}+ を用いて「\JOjpChar」を表示する。
+  \TeX エンジンの自動認識には未対応なので \verb+\RequirePackage+ はしていない。
+  このため文書ファイル側で適切なパッケージを \verb+\usepackage+ する必要がある。
+\item \texttt{otf}オプションを用いない場合、直接入力で追加漢字面を表示できる必要がある。
+\item \verb+\SetJOjp+ で「\JOjpChar」が、\verb+\SetJOcn+ で「\JOcnChar」が用いられる。
+\end{itemize}
+
+\newpage
+\noindent ここでちょっと表示を試してみよう。
+\verb+\[2^{100}=\text{\Xkansuji{\xintiPow{2}{100}}}\]+ の結果は
+\small
+\[
+2^{100}=\text{\Xkansuji{\xintiPow{2}{100}}}
+\]
+\normalsize
+である。
+\paragraph{数詞が不足する問題}
+そこでもう少し大きな数を表示させてみよう。たとえば次を入力してみると
+
+\hfil\verb+$1234567^{89}=$\Xkansuji{\xintiPow{1234567}{89}}+\bigskip
+
+$1234567^{89}=$\Xkansuji{\xintiPow{1234567}{89}}
+
+
+\noindent
+\textbf{残念ながら、あっさりと数詞が足りなくなってしまう。}
+「無量大数」なんて大した数ではないことがわかる。
+
+\section{上数法による表示}
+\makeatletter
+漢数字による通常の表示方法は古来「中数」と呼ばれている。
+この他「下数」「上数」という命数法がある\footnote{%
+「中数」において「一万倍ごとに」単位を考える方法を「万進」と呼ぶ。中数には「万進」以外に
+「一億倍ごとに」単位を考える「万万進」がある。「億以上はすべて万万進」「恒河沙以上のみ万万進」
+などいろいろあるので、ここでは割愛する。}。
+「万」までは共通だが、そのあとの決め方が異なる。「下数」は
+\begin{itembox}[l]{下数法}
+\[
+\text{千}
+\ \xrightarrow{\quad\text{十倍}\quad}\ {}
+\text{万}
+\ \xrightarrow{\quad\text{十倍}\quad}\ {}
+\text{億}
+\ \xrightarrow{\quad\text{十倍}\quad}\ {}
+\text{兆}
+\ \xrightarrow{\quad\text{十倍}\quad}\ {}
+\text{京}
+\ \xrightarrow{\quad\text{十倍}\quad}\ {}\cdots
+\]
+\end{itembox}
+のように十倍ごとに数の名称を変える方法である。
+古い時代にはこのような命数法が用いられたようだ。
+
+一方「上数」は、たとえば「億」の「十万倍」は「十万億」と呼び、
+「億億＝兆」のように本当に言葉が足りなくなるごとに（二乗ごとに）新しい数詞を導入する
+方法である。このルールは「万」以上に適用され、「千」までは下数法と共通とする。
+\begin{itembox}[l]{上数法}
+\[
+\text{万}
+\ \xrightarrow{\quad\text{万倍}\quad}\ {}
+\text{億}
+\ \xrightarrow{\quad\text{億倍}\quad}\ {}
+\text{兆}
+\ \xrightarrow{\quad\text{兆倍}\quad}\ {}
+\text{京}
+\ \xrightarrow{\quad\text{京倍}\quad}\ {}
+\text{垓}
+\ \xrightarrow{\quad\text{垓倍}\quad}\ {}\ {}\cdots
+\]
+\end{itembox}
+指数表記を用いて、数の表現能力を比較してみよう。
+機械的に計算すると次の表のようになる。
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}\hline
+      &一&十&百&千&万&億&兆&京&垓&\JOcuurentChar&穣&溝\\\hline
+    下数 & $10^0$  & $10^1$  & $10^2$  & $10^3$  & $10^4$  & $10^5$  & $10^6$  & $10^7$  & $10^8$  & $10^9$  & $10^{10}$ & $10^{11}$ \\\hline
+    中数（万進）& $10^0$  & $10^1$  & $10^2$  & $10^3$  & $10^4$  & $10^8$  & $10^{12}$  & $10^{16}$  & $10^{20}$  & $10^{24}$  & $10^{28}$ & $10^{32}$ \\\hline
+    上数& $10^0$  & $10^1$  & $10^2$  & $10^3$  & $10^4$  & $10^8$  & $10^{16}$  & $10^{32}$  & $10^{64}$  & $10^{128}$  & $10^{256}$ & $10^{512}$ \\\hline
+  \end{tabular}
+  \bigskip\\
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}\hline
+     &澗&正&載&極&恒河沙&阿僧祇&那由他&不可思議&無量大数\\\hline
+    下数 & $10^{12}$  & $10^{13}$  & $10^{14}$  & $10^{15}$  & $10^{16}$  & $10^{17}$  & $10^{18}$  & $10^{19}$  & $10^{20}$ \\\hline
+    中数（万進）& $10^{36}$  & $10^{40}$  & $10^{44}$  & $10^{48}$  & $10^{52}$  & $10^{56}$  & $10^{60}$  & $10^{64}$  & $10^{68}$ \\\hline
+    上数& $10^{1024}$  & $10^{2048}$  & $10^{4096}$  & $10^{8192}$  & $10^{16384}$  & $10^{32768}$  & $10^{65536}$  & $10^{131072}$  & $10^{262144}$ \\\hline
+  \end{tabular}
+\end{center}
+\paragraph{上数法による表示}
+「上数」による表示は下記のような入れ子構造になり、上位に下位の名称が何度も登場する。
+このため表示の一部分を見た場合、そこの全体に対する位置付けが判断できず、使いにくい。
+あくまで理論上考えられただけで、実務に用いられたことはないようである。
+%
+\begingroup%入れ子構造を見せるための \xksj@josu@c の再定義
+\def\xksj@josu@c#1#2#3#4{%
+ \ifx #4\relax%
+    \ifx #3\relax
+        \xksj@fullexpandafter\@firstoffour
+    \else
+        \xksj@fullexpandafter\@secondoffour
+    \fi
+ \else
+    \ifx #3\relax
+        \xksj@fullexpandafter\@thirdoffour
+    \else
+        \xksj@fullexpandafter\@fourthoffour
+    \fi
+ \fi
+   {#2\relax}%
+   {#2{{}{#3}}\relax}%
+   {\xksj@josu@c{#1}{#2}{#4}}%
+   {\xksj@josu@c{#1}{#2{{}{\fbox{#4}~#1}\ {#3}}}{\relax}}%
+}
+\fboxsep=.3ex
+\begin{align*}
+  &1234,1243,1324,1342,1423,1432,2134,2143\\[1ex]
+  &=\text{\JoKansuji{12341243132413421423143221342143}}\\[1ex]
+  &=\text{\scriptsize\JoKKansuji{12341243132413421423143221342143}}
+\end{align*}
+\endgroup
+\makeatother
+\paragraph{\TeX マクロ}
+たとえ使いにくくとも、この表示を行なうための \TeX マクロを作る。
+\begin{itembox}[l]{4桁ブロックをアラビア数字で表記する場合}
+\begin{itemize}
+\item \verb+\jokansuji+ \LaTeX のカウンタの表示
+\item \verb+\@jokansuji+ \TeX カウンタ（\LaTeX カウンタの内部表現など）の表示
+\item \verb+\JoKansuji+ アラビア数字の文字列を変換して表示
+\end{itemize}  
+\end{itembox}
+\begin{itembox}[l]{全てを漢数字で表記する場合}
+\begin{itemize}
+\item \verb+\jokkansuji+ \LaTeX のカウンタの表示
+\item \verb+\@jokkansuji+ \TeX カウンタ（\LaTeX カウンタの内部表現など）の表示
+\item \verb+\JoKKansuji+ アラビア数字の文字列を変換して表示
+\end{itemize}  
+\end{itembox}
+さてこのマクロを用いて先の $1234567^{89}$ を表してみよう。
+\newpage
+\noindent\verb+$1234567^{89}=$\JoKansuji{\xintiPow{1234567}{89}}+\par
+$1234567^{89}=$
+\JoKansuji{\xintiPow{1234567}{89}}\medskip\par
+\noindent\verb+$1234567^{89}=$\JoKKansuji{\xintiPow{1234567}{89}}+\par
+$1234567^{89}=$
+\JoKKansuji{\xintiPow{1234567}{89}}\par
+\begin{itembox}[l]{\bfseries クイズ}
+  \centering
+  上の表示の中で、最上位の漢字はどれでしょう??  
+\end{itembox}
+\par\medskip\noindent
+「上数」を利用するなら、$(\text{無量大数})^2-1=10^{524288}-1$ までは表示できる。
+もっともあまりに大きい数は、表示させようとしても \verb+TeX capacity exceeded, sorry+
+となって \TeX\space が停止してしまう。
+\def\thesection{第\kegonknumeral{section}話}
+\section{華厳経にもとづく表示}
+さて「恒河沙」以上の単位は仏典に由来する。しかしこれは単に
+中国人が仏典から「借りてきた」だけであって、仏典やインド人の用法とは異なる。
+そして仏典には、はるかに巨大な数が記されている。
+% 「上数」と同じ考え方で実用的なものではなく、インドの実用的な体系とも異なる。
+華厳経・阿僧祇品にもとづく命数法で表示してみる。
+\paragraph{下位の命数法}
+まず下位の数については現代インドの実用的な体系と同一である。
+\begin{center}\footnotesize \hspace*{-2ex}
+  \begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}\hline
+    & $10^0$ &    $10^1$ &    $10^2$ &    $10^3$ & $10^4$ &  $10^5$ & $10^6$  &    $10^7$ &$10^8$\\\hline
+    インド英語     & one &   ten &  hundred  &  thousand & ten thousand &  lakh  & ten lakh &  crore & ten crore \\\hline
+    現代ヒンディー & ek &    das &  sau  &    sahasra / haz\={a}r & das haz\={a}r &  l\={a}kh  & das l\={a}kh  & karo\d{r}  & das karo\d{r}   \\\hline
+    漢訳華厳経（八十華厳） &  &  &  & &    & 洛叉 &  &  倶胝 &\\\hline
+    （参考）ラーマーヤナ & eka  &  dasha & shata  & sahasra & ayuta &  lak\d{s}a  &  &  ko\d{t}i &   \\\hline
+  \end{tabular}\relax  
+\end{center}
+インドでは「万」の数詞は用いられず 10 haz\={a}r と表現する\footnote{%
+ただし上の表のラーマーヤナのように万に相当する数詞が出現する文献はある。
+ここに見える$\text{ayuta}=10^4$は八十華厳の$\text{阿\YUjpChar 多}=10^{7\times2}$と同じ単語であろうか。}。
+その10倍で次の数詞 100 haz\={a}r = 1 l\={a}kh が現れ、
+以後同様に100倍ごとに新たな数詞が導入されるのが現代も用いられている
+実務的命数法である。
+たとえば 12,34,567 は 12 l\={a}kh 34 haz\={a}r 567 （12洛叉34千567）と表現することになる。
+
+\paragraph{仏典における上位の命数法}
+だが大乗仏典では宗教的な動機により「気が遠くなるほどの巨大数」を並べようとする。
+この目的のために上数法で新しい数の名前を導入してゆく。たとえば漢訳仏典
+\begin{quote}
+  % 唐の実叉難陀（652年 - 710年）訳の80巻本（「八十華厳」、新訳、唐訳）  
+  「八十華厳」（新訳、唐訳）：唐の実叉難陀（652年 -- 710年）訳の80巻本
+\end{quote}
+の阿僧祇品では、最初に $10^2\times10^5=\text{百洛叉}=\text{倶胝}=10^7$ が述べられたあと、
+その次からは上数法で数の名前が並べられる。
+\[
+(\text{倶胝})^2=\text{阿\YUjpChar 多}=10^{7\times2},\quad
+(\text{阿\YUjpChar 多})^2=\text{那由他}=10^{7\times2^2},\quad
+(\text{那由他})^2=\text{頻波羅}=10^{7\times2^3},\dots
+\]
+そして以下に引用するように延々と巨大数が説明される。
+{\headfont\ref{appendix:八十華厳の数詞}}にその全ての指数表示を掲載する。
+\begin{multicols}{3}\footnotesize \parindent=0pt
+  \input{kegon-80-sutra}
+\end{multicols}
+最後の方がイレギュラーで「不可説不可説」が2つの異なる意味で用いられている。
+\begin{enumerate}\def\labelenumi{(\theenumi)}
+\item $\text{不可量轉不可量轉}=(\text{不可量轉})^2=\text{不可説}$
+\item $\text{不可説不可説}=(\text{不可説})(\text{不可説})=(\text{不可説})^2=\text{不可説轉}$
+\item $\text{不可説轉不可説轉}=(\text{不可説轉})(\text{不可説轉})=(\text{不可説轉})^2=\text{不可説不可説}\quad\Bigl(\neq(\text{不可説})(\text{不可説})\Bigr)$
+\item $\text{此又}\text{不可説不可説}=(\text{不可説不可説})(\text{不可説不可説})=(\text{不可説不可説})^2=\text{不可説不可説}\text{轉}$
+\end{enumerate}
+と述べられ、(2)の最左辺の「不可説不可説」は「不可説」の二乗の意味だが、
+(3)の最右辺の「不可説不可説」はこれで1単位であって、「不可説」を用いるなら $(\text{不可説})^4$ である。
+もしかしたら単に漢訳が不適切なだけで、サンスクリット原文では識別可能なのかも知れない。実際
+\begin{quote}
+  % 東晋の仏陀跋陀羅（359年 - 429年）訳の60巻本（「六十華厳」、旧訳、晋訳）  
+  「六十華厳」（旧訳、晋訳）：東晋の仏陀跋陀羅（359年 -- 429年）訳の60巻本
+\end{quote}
+においてはこの部分は
+\begin{enumerate}\def\theenumi{\alph{enumi}}\def\labelenumi{(\theenumi)}
+\item 不可量轉不可量轉名一不可説
+\item 不可説不可説名一不可説轉
+\item 不可説轉不可説轉名一不可説轉轉
+\end{enumerate}
+となっており識別可能である。
+もっとも「六十華厳」の命数法はしょっぱなから「八十華厳」と異なっている。
+\begin{itemize}
+\item 百千百千名一拘梨；($=10^{5\times2}$)（つまり百千＝洛叉 の次から上数法を開始）
+\item 拘梨拘梨名一不變；($=10^{5\times2^2}$)
+\item 不變不變名一那由他；($=10^{5\times2^3}$)
+\item $\vdots$\hfil$\vdots$\hfil$\vdots$\hfil$\vdots$\hfil\hfil\hfil
+\item 不可説不可説名一不可説轉；($=10^{5\times2^{120}}$)
+\item 不可説轉不可説轉名一不可説轉轉。($=10^{5\times2^{121}}$)
+\end{itemize}
+途中に現れる数詞の漢訳名も異なっている所が多く、抜けも見られる。
+「六十華厳」は「八十華厳」よりも最大数詞が小さいので、以下「八十華厳」に話を戻す。
+「八十華厳」の最大数詞「不可説不可説轉」は次の値になる。
+\[
+\text{不可説不可説轉}=10^{7\times2^{122}}=10^{37218383881977644441306597687849648128}
+\]
+% この命数法によれば
+% \[
+% (\text{不可説不可説轉})^2-1=10^{7\times2^{123}}-1=10^{74436767763955288882613195375699296256}-1
+% \]
+% までの自然数を表示できる。
+
+\paragraph{\TeX マクロ}
+そこで「八十華厳」の命数法で自然数を表示する\TeX マクロを作った。
+\begin{itembox}[l]{7桁ブロックをアラビア数字で表記する場合}
+\begin{itemize}
+\item \verb+\kegonnumeral+ \LaTeX のカウンタの表示
+\item \verb+\@kegonnumeral+ \TeX カウンタ（\LaTeX カウンタの内部表現など）の表示
+\item \verb+\Kegonnumeral+ アラビア数字の文字列を変換して表示
+\end{itemize}  
+\end{itembox}
+\begin{itembox}[l]{全てを漢数字で表記する場合}
+\begin{itemize}
+\item \verb+\kegonknumeral+ \LaTeX のカウンタの表示
+\item \verb+\@kegonknumeral+ \TeX カウンタ（\LaTeX カウンタの内部表現など）の表示
+\item \verb+\Kegonknumeral+ アラビア数字の文字列を変換して表示
+\end{itemize}  
+\end{itembox}
+なお経典の引用で旧漢字だった文字も、このマクロでは常用漢字を（対応物が存在すれば）用いている。
+
+\paragraph{使用例}
+まずはアラビア数字との混合表示から。
+% 例の$1234567^{89}$は次のようになる。
+% 
+% \noindent\verb+$1234567^{89}=$ \Kegonnumeral{\xintiPow{1234567}{89}}+\par
+% $1234567^{89}=$ \Kegonnumeral{\xintiPow{1234567}{89}}\par
+% 
+次の値は小さい方から16番目の\textbf{メルセンヌ素数}である。
+
+\noindent\verb+$M_{2203}=2^{2203}-1=$\Kegonnumeral{\xintSub{\xintiPow{2}{2203}}{1}}+
+\par\noindent$M_{2203}=2^{2203}-1=$
+\Kegonnumeral{\xintSub{\xintiPow{2}{2203}}{1}}
+\vfil
+\noindent 次に漢字だけの表示。
+次の値は小さい方から26番目の\textbf{メルセンヌ素数}である。
+\newpage
+\noindent\verb+$M_{23209}=2^{23209}-1=$\Kegonknumeral{\xintSub{\xintiPow{2}{23209}}{1}}+
+\par\noindent$M_{23209}=2^{23209}-1=$
+\ifSkipXint
+  \newread\MersenneFile \openin\MersenneFile=M23209.dat \read\MersenneFile to\TwentySixthMersennePrime \closein\MersenneFile
+  \Kegonknumeral\TwentySixthMersennePrime
+\else
+  \Kegonknumeral{\xintSub{\xintiPow{2}{23209}}{1}}%
+\fi
+\begin{center}\bfseries\large
+このように実際に表示してみると、実にわかりやすい。
+\end{center}
+なおこの表示における最大の数詞は「$\text{多婆羅}=10^{3584}=10^{7\times2^9}$」である。
+一方 $M_{23209}\approx 4.02874\times10^{6986}$ なので、「多婆羅」は表示の真中あたりに
+埋もれている。
+
+\paragraph{文字の範囲について}
+\verb+\xkansuji+ では「\JOjpChar」%𥝱
+の1文字を気にしていれば良かったが、今度は次のものがp\TeX の範囲外になる。
+すべてBMPの文字であるが、\texttt{U+747F}はAdobe-Japan-1-6 に入っていない。
+\begin{center}
+  \makeatletter
+  \begin{tabular}{|r|c|r|}\hline
+    Unicode &  & CID(AJ)  \\\hline
+    \tt U+5EBE & \xksj@YU &\tt 14508 \\\hline
+    \tt U+9210 & \xksj@KEN &\tt  8647 \\\hline
+    \tt U+4F49 & \xksj@KYA &\tt 14318 \\\hline
+    \tt U+651E & \xksj@RA &\tt 17717 \\\hline
+  % \end{tabular}
+  % \hfil
+  % \begin{tabular}{|r|c|r|}\hline
+  %   Unicode &  & CID(AJ)  \\\hline
+    \tt U+747F & \xksj@EI &\tt  なし \\\hline
+    \tt U+618D & \xksj@KYOU &\tt 14552 \\\hline
+    \tt U+979E & \xksj@BEI &\tt 18920 \\\hline
+    \tt U+7AA3 & \xksj@SO &\tt 14930 \\\hline
+  \end{tabular}
+  \makeatother
+\end{center}
+パッケージ・オプション\verb+otf+ では、これらを\textsf{otfパッケージ}の \verb+\UTF{}+ を用いて表示する。
+\bigskip
+
+\paragraph{}
+以上が\textsf{xintパッケージ}の使い方の一例である。次の\textbf{\ref{appendix:八十華厳の数詞}}も
+\textsf{xintパッケージ}を利用して計算している。
+
+\appendix
+\input{kegon-80-numerals.tex}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: japanese-latex
+%%% TeX-master: t
+%%% End: 
+
