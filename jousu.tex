@@ -120,7 +120,6 @@ $1234567^{89}=$\Xkansuji{\xintiPow{1234567}{89}}
 「無量大数」なんて大した数ではないことがわかる。
 
 \section{上数法による表示}
-\makeatletter
 漢数字による通常の表示方法は古来「中数」と呼ばれている。
 この他「下数」「上数」という命数法がある\footnote{%
 「中数」において「一万倍ごとに」単位を考える方法を「万進」と呼ぶ。中数には「万進」以外に
@@ -184,6 +183,7 @@ $1234567^{89}=$\Xkansuji{\xintiPow{1234567}{89}}
 あくまで理論上考えられただけで、実務に用いられたことはないようである。
 %
 \begingroup%入れ子構造を見せるための \xksj@josu@c の再定義
+\makeatletter
 \def\xksj@josu@c#1#2#3#4{%
  \ifx #4\relax%
     \ifx #3\relax
@@ -202,7 +202,8 @@ $1234567^{89}=$\Xkansuji{\xintiPow{1234567}{89}}
    {#2{{}{#3}}\relax}%
    {\xksj@josu@c{#1}{#2}{#4}}%
    {\xksj@josu@c{#1}{#2{{}{\fbox{#4}~#1}\ {#3}}}{\relax}}%
-}
+}%
+\makeatother
 \fboxsep=.3ex
 \begin{align*}
   &1234,1243,1324,1342,1423,1432,2134,2143\\[1ex]
@@ -210,7 +211,6 @@ $1234567^{89}=$\Xkansuji{\xintiPow{1234567}{89}}
   &=\text{\scriptsize\JoKKansuji{12341243132413421423143221342143}}
 \end{align*}
 \endgroup
-\makeatother
 \paragraph{\TeX マクロ}
 たとえ使いにくくとも、この表示を行なうための \TeX マクロを作る。
 \begin{itembox}[l]{4桁ブロックをアラビア数字で表記する場合}
