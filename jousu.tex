@@ -75,9 +75,12 @@ $2^{31}$の十進展開を「計算する」ことは出来ない。
 この文書では計算については \textsf{xintパッケージ} を利用している。
 例えばセクションの番号の設定は、このセクションに入る前に次のように入力している
 \footnote{%
-\texttt{\textbackslash xintiSub}の所は以前は\texttt{\textbackslash xintSub}だった。
-\texttt{\textbackslash xintSub}
-は現在の\textsf{xintパッケージ}では有理数計算に用いられ、出力形式が異なる。}。
+2016/08/18 \texttt{\textbackslash xintSub} を \texttt{\textbackslash xintiSub} に変更。
+現在の\textsf{xintパッケージ}では\texttt{\textbackslash xintSub}は有理数計算用で、出力形式が異なる。}。
+% \footnote{%
+% \texttt{\textbackslash xintiSub}の所は以前は\texttt{\textbackslash xintSub}だった。
+% \texttt{\textbackslash xintSub}は有理数計算用で、
+% 現在の\textsf{xintパッケージ}では出力形式が異なる。}。
 \begin{verbatim}
 \def\thesection{第\xkansuji{section}回}
 \setcounter{section}{\xintiSub{\xintiPow{2}{31}}{4}}%% 2^{31}-4
