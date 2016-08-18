@@ -1,17 +1,17 @@
 \begingroup\makeatletter
 \newcount\KegonToDecimalPower
 \def\KegonUnitToDecimal{%
-  $10^{7\times2^{\the\KegonToDecimalPower}}=10^{\xintMul{7}{\xintiPow{2}{\the\KegonToDecimalPower}}}$%
+  $10^{7\times2^{\the\KegonToDecimalPower}}=10^{\xintiMul{7}{\xintiPow{2}{\the\KegonToDecimalPower}}}$%
   \global\advance\KegonToDecimalPower\@ne
 }%
 \expandafter\def\expandafter\xksj@tmp@list\expandafter{\expandafter\xksj@cdr\xksj@kgn@base@list}%
 \def\xksj@tmp@unit@stop{■}%
-\providecommand\KegonTableLines{36}
+\providecommand\KegonTableLines{36}%
 \newcount\xksj@KegonTableLines \xksj@KegonTableLines=\KegonTableLines
 \newcount\xksj@tempcnta
 \def\xksj@make@kegon@unit@table@content{%
   \def\xksj@kegon@unit@table@content{}%
-  \xksj@tempcnta=1
+  \xksj@tempcnta=1%
   \loop%
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \global\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\expandafter\def%
@@ -44,5 +44,5 @@
 \makeatother\endgroup
 %%% Local Variables: 
 %%% mode: japanese-latex
-%%% TeX-master: "josu"
+%%% TeX-master: "jousu"
 %%% End: 
