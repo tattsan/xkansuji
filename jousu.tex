@@ -93,7 +93,9 @@ $2^{31}$の十進展開を「計算する」ことは出来ない。
 OTFフォントなら「\JOjpChar」は CID 17018 でアクセスできる。
 Unicodeなら第2面（追加漢字面, SIP）のU+25771にある。
 \begin{itemize}
-\item パッケージ・オプション\texttt{otf}で、\textsf{otfパッケージ}の \verb+\CID{17018}+ を用いて「\JOjpChar」を表示する。
+\item 
+  % パッケージ・オプション\texttt{otf}で、\textsf{otfパッケージ}の \verb+\CID{17018}+ を用いて「\JOjpChar」を表示する。
+  パッケージ・オプション\texttt{otf}で、\textsf{otfパッケージ}の \verb+\UTF{25771}+ を用いて「\JOjpChar」を表示する。
   \TeX エンジンの自動認識には未対応なので \verb+\RequirePackage+ はしていない。
   このため文書ファイル側で適切なパッケージを \verb+\usepackage+ する必要がある。
 \item \texttt{otf}オプションを用いない場合、直接入力で追加漢字面を表示できる必要がある。
