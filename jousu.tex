@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \documentclass[dvipdfmx]{jsarticle}
 \usepackage{otf}\PassOptionsToPackage{otf}{xkansuji}
 \usepackage[moga-mobo,directunicode]{pxchfon}
@@ -51,7 +51,7 @@
 \maketitle
 漢数字の表示マクロを作ったら明後日の方向に進んでゆき、実に役に立たないパッケージになった。
 \def\thesection{第\xkansuji{section}話}
-\setcounter{section}{\xintisub{\xintipow{2}{31}}{4}}%% 2^{31}-4
+\setcounter{section}{\xintiiSub{\xintiiPow{2}{31}}{4}}%% 2^{31}-4
 \section{普通の命数法}
 当初は普通の漢数字マクロだった。
 p\TeX\space のプリミティブで \verb+\kansuji2014年+ が二〇一四年と表示されるのを、
@@ -67,7 +67,7 @@ p\TeX\space のプリミティブで \verb+\kansuji2014年+ が二〇一四年�
 \textbf{大きな数を表示できること}を心掛けた。
 たとえば \TeX のカウンタが扱える範囲は $1-2^{31}$ から $2^{31}-1$ までであるから、
 \[
-2^{31}-1=\xintisub{\xintipow{2}{31}}{1}
+2^{31}-1=\xintiiSub{\xintiiPow{2}{31}}{1}
 \]
 は当然表示できねばならない。
 なお本パッケージの機能は単に数を表示するだけなので、
@@ -80,14 +80,18 @@ $2^{31}$の十進展開を「計算する」ことは出来ない。
 \footnote{%
   2018/02/16 \texttt{\textbackslash xintiSub},\texttt{\textbackslash xintiPow}
   （ 1.2o (2017/08/29)で廃止 ）を\texttt{\textbackslash xintisub},\texttt{\textbackslash xintipow} に変更。}%
+\footnote{%
+  2018/07/14 \texttt{\textbackslash xintisub},\texttt{\textbackslash xintipow}
+  （ 1.3 (2018/03/01)で廃止 ）を\texttt{\textbackslash xintiiSub},\texttt{\textbackslash xintiiPow} に変更。
+  どうやら *2 の変更のとき、\textsf{xint}のマニュアルを読み間違えたらしい。}%
 。
 % \footnote{%
-% \texttt{\textbackslash xintiSub}の所は以前は\texttt{\textbackslash xintSub}だった。
+% \texttt{\textbackslash xintiiSub}の所は以前は\texttt{\textbackslash xintSub}だった。
 % \texttt{\textbackslash xintSub}は有理数計算用で、
 % 現在の\textsf{xintパッケージ}では出力形式が異なる。}。
 \begin{verbatim}
 \def\thesection{第\xkansuji{section}回}
-\setcounter{section}{\xintisub{\xintipow{2}{31}}{4}}%% 2^{31}-4
+\setcounter{section}{\xintiiSub{\xintiiPow{2}{31}}{4}}%% 2^{31}-4
 \end{verbatim}
 \vspace*{-2ex}
 \paragraph{「\JOjpChar」について。}
@@ -111,19 +115,19 @@ Unicodeなら第2面（追加漢字面, SIP）のU+25771にある。
 
 \newpage
 \noindent ここでちょっと表示を試してみよう。
-\verb+\[2^{100}=\text{\Xkansuji{\xintipow{2}{100}}}\]+ の結果は
+\verb+\[2^{100}=\text{\Xkansuji{\xintiiPow{2}{100}}}\]+ の結果は
 \small
 \[
-2^{100}=\text{\Xkansuji{\xintipow{2}{100}}}
+2^{100}=\text{\Xkansuji{\xintiiPow{2}{100}}}
 \]
 \normalsize
 である。
 \paragraph{数詞が不足する問題}
 そこでもう少し大きな数を表示させてみよう。たとえば次を入力してみると
 
-\hfil\verb+$1234567^{89}=$\Xkansuji{\xintipow{1234567}{89}}+\bigskip
+\hfil\verb+$1234567^{89}=$\Xkansuji{\xintiiPow{1234567}{89}}+\bigskip
 
-$1234567^{89}=$\Xkansuji{\xintipow{1234567}{89}}
+$1234567^{89}=$\Xkansuji{\xintiiPow{1234567}{89}}
 
 
 \noindent
@@ -240,12 +244,12 @@ $1234567^{89}=$\Xkansuji{\xintipow{1234567}{89}}
 \end{itembox}
 さてこのマクロを用いて先の $1234567^{89}$ を表してみよう。
 \newpage
-\noindent\verb+$1234567^{89}=$\JoKansuji{\xintipow{1234567}{89}}+\par
+\noindent\verb+$1234567^{89}=$\JoKansuji{\xintiiPow{1234567}{89}}+\par
 $1234567^{89}=$
-\JoKansuji{\xintipow{1234567}{89}}\medskip\par
-\noindent\verb+$1234567^{89}=$\JoKKansuji{\xintipow{1234567}{89}}+\par
+\JoKansuji{\xintiiPow{1234567}{89}}\medskip\par
+\noindent\verb+$1234567^{89}=$\JoKKansuji{\xintiiPow{1234567}{89}}+\par
 $1234567^{89}=$
-\JoKKansuji{\xintipow{1234567}{89}}\par
+\JoKKansuji{\xintiiPow{1234567}{89}}\par
 \begin{itembox}[l]{\bfseries クイズ}
   \centering
   上の表示の中で、最上位の漢字はどれでしょう??  
@@ -363,25 +367,25 @@ $1234567^{89}=$
 まずはアラビア数字との混合表示から。
 % 例の$1234567^{89}$は次のようになる。
 % 
-% \noindent\verb+$1234567^{89}=$ \Kegonnumeral{\xintipow{1234567}{89}}+\par
-% $1234567^{89}=$ \Kegonnumeral{\xintipow{1234567}{89}}\par
+% \noindent\verb+$1234567^{89}=$ \Kegonnumeral{\xintiiPow{1234567}{89}}+\par
+% $1234567^{89}=$ \Kegonnumeral{\xintiiPow{1234567}{89}}\par
 % 
 次の値は小さい方から16番目の\textbf{メルセンヌ素数}である。
 
-\noindent\verb+$M_{2203}=2^{2203}-1=$\Kegonnumeral{\xintisub{\xintipow{2}{2203}}{1}}+
+\noindent\verb+$M_{2203}=2^{2203}-1=$\Kegonnumeral{\xintiiSub{\xintiiPow{2}{2203}}{1}}+
 \par\noindent$M_{2203}=2^{2203}-1=$
-\Kegonnumeral{\xintisub{\xintipow{2}{2203}}{1}}
+\Kegonnumeral{\xintiiSub{\xintiiPow{2}{2203}}{1}}
 \vfil
 \noindent 次に漢字だけの表示。
 次の値は小さい方から26番目の\textbf{メルセンヌ素数}である。
 \newpage
-\noindent\verb+$M_{23209}=2^{23209}-1=$\Kegonknumeral{\xintisub{\xintipow{2}{23209}}{1}}+
+\noindent\verb+$M_{23209}=2^{23209}-1=$\Kegonknumeral{\xintiiSub{\xintiiPow{2}{23209}}{1}}+
 \par\noindent$M_{23209}=2^{23209}-1=$
 \ifSkipXint
   \newread\MersenneFile \openin\MersenneFile=M23209.dat \read\MersenneFile to\TwentySixthMersennePrime \closein\MersenneFile
   \Kegonknumeral\TwentySixthMersennePrime
 \else
-  \Kegonknumeral{\xintisub{\xintipow{2}{23209}}{1}}%
+  \Kegonknumeral{\xintiiSub{\xintiiPow{2}{23209}}{1}}%
 \fi
 \begin{center}\bfseries\large
 このように実際に表示してみると、実にわかりやすい。
