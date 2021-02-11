@@ -4,6 +4,7 @@ xkansuji package
 ### Caution
 This is a joke package. It has no practical use.
 
+### Commands
   * `\xkansuji{LaTeX counter}`
   * `\@xkansuji{TeX counter}`
   * `\Xkansuji{Arabic numerals string}`
