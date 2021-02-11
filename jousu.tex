@@ -1,13 +1,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\documentclass[dvipdfmx]{jsarticle}
-\usepackage{otf}\PassOptionsToPackage{otf}{xkansuji}
-\usepackage[moga-mobo,directunicode]{pxchfon}
-\usepackage{ascmac}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \documentclass[dvipdfmx,uplatex]{jsarticle}
-% \usepackage[uplatex]{otf}\PassOptionsToPackage{otf}{xkansuji}
+% \documentclass[dvipdfmx]{jsarticle}
+% \usepackage{otf}\PassOptionsToPackage{otf}{xkansuji}
 % \usepackage[moga-mobo,directunicode]{pxchfon}
 % \usepackage{ascmac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentclass[dvipdfmx,uplatex]{jsarticle}
+\documentclass[uplatex,base=10pt,magstyle=nomag,dvipdfmx]{bxjsarticle}
+\setpagelayout{%
+  % left=15mm,right=15mm,
+  top=15mm,bottom=15mm,
+}%
+\usepackage[uplatex]{otf}\PassOptionsToPackage{otf}{xkansuji}
+\usepackage[moga-mobo,directunicode]{pxchfon}
+\usepackage{ascmac}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \documentclass{ltjsarticle}
 % \usepackage{luatexja-fontspec}

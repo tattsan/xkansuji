@@ -1,35 +1,35 @@
-xkansuji パッケージ
+xkansuji package
 ==================
 
-### 注意
-このパッケージはジョークです。実用にはなりません。
+### Caution
+This is a joke package. It has no practical use.
 
-  * `\xkansuji{LaTeXカウンタ}`
-  * `\@xkansuji{TeXカウンタ}`
-  * `\Xkansuji{アラビア数字の文字列}`
+  * `\xkansuji{LaTeX counter}`
+  * `\@xkansuji{TeX counter}`
+  * `\Xkansuji{Arabic numerals string}`
 
-  普通に漢数字で表示します。2014 は二千十四に変換され、二〇一四にはなりません。実用的なパッケージなら色々と書式を制御できるオプションを備えることでしょうが、それはこのパッケージの目的外です。
+This will give you the usual Chinese numerals: 2014 will be converted to 二千十四, not 二〇一四. A more practical package would have various options to control the formatting, but that is not the purpose of this package.
 
-  * `\jokkansuji{LaTeXカウンタ}`
-  * `\@jokkansuji{TeXカウンタ}`
-  * `\JoKKansuji{アラビア数字の文字列}`
+  * `\jokkansuji{LaTeX counter}`
+  * `\@jokkansuji{TeX counter}`
+  * `\JoKKansuji{Arabic numerals string}`
 
-  上数法による漢数字の表示です。
+This will give you the Chinese numerals in the long scale.
 
-  * `\kegonknumeral{LaTeXカウンタ}`
-  * `\@kegonknumeral{TeXカウンタ}`
-  * `\Kegonknumeral{アラビア数字の文字列}`
+  * `\kegonknumeral{LaTeX counter}`
+  * `\@kegonknumeral{TeX counter}`
+  * `\Kegonknumeral{Arabic numerals string}`
 
-  漢訳仏典の数詞による漢数字の表示です。
+This will use numerals in the Chinese translation of the Buddhist scriptures, in the long scale.
 
-### 更新履歴
+### History
 
   * Version 0.01 2014/12/10
-    - 初公開。
+    - First release.
 
 ### TODO
 
-  * もっとヘンテコな数の表示法を実装する。
+  *  Implement a more weird notation of numbers.
 
 ------------
 SATO Tatsuya
